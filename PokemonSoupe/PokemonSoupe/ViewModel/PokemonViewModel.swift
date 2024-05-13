@@ -31,10 +31,12 @@ class PokemonViewModel: ObservableObject {
         let nextURL = results.last?.next
         
         let morePokemons = try! await downloadPokemonList(by: nextURL)
-        self.results.append(contentsOf: morePokemons)
-        
-        if allLodadedPokemons == self.results.first?.count {
-            self.isMorePokemonsAvailable = false
+
+        DispatchQueue.main.async {
+            self.results.append(contentsOf: morePokemons)
+            if self.allLodadedPokemons == self.results.first?.count {
+                self.isMorePokemonsAvailable = false
+            }
         }
     }
     

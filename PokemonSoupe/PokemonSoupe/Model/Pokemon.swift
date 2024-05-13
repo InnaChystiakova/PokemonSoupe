@@ -28,4 +28,6 @@ struct Pokemon: Codable {
     var height: Int
     var baseExperience: Int
     var isdefault: Bool
+    
+    
 }
