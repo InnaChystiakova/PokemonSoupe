@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct PokemonDetailsView: View {
+    @StateObject var viewModel = PokemonViewModel()
     @Binding var pokemon: Pokemon?
-    
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
@@ -21,7 +21,7 @@ struct PokemonDetailsView: View {
                     .frame(height: 450)
                     .overlay {
                         VStack(alignment: .leading) {
-                            let imageName = (pokemon?.isDefault ?? true) ? "circle.badge.checkmark" : "circle.badge.xmark"
+                            let imageName = (pokemon?.isDefault ?? false) ? "circle.badge.checkmark" : "circle.badge.xmark"
                             Image(systemName: imageName)
                                 .frame(
                                     minWidth: 0,
@@ -71,6 +71,22 @@ struct PokemonDetailsView: View {
                         .foregroundStyle(.white)
                         .padding()
                     }
+                let stats = pokemon?.stats ?? []
+                ForEach(stats, id: \.self) { stat in
+                    let stat = viewModel.filterStatsWithName(name: stat.statInfo.name)
+                    VStack (alignment: .leading, spacing: 5){
+                        PokemonStatView(stat: stat)
+                    }
+                    .frame(
+                        minWidth: 0,
+                        maxWidth: .infinity,
+                        minHeight: 0,
+                        maxHeight: .infinity,
+                        alignment: .bottomLeading
+                    )
+                    .foregroundStyle(.white)
+                    .padding()
+                }
             }
         }
         .background(LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.green]), startPoint: .topLeading, endPoint: .bottomTrailing)
@@ -87,6 +103,46 @@ struct PokemonDetailsView: View {
         }
         .ignoresSafeArea()
         .toolbarBackground(.hidden, for: .navigationBar)
+        .task {
+            do { try await viewModel.fetchStats() }
+            catch { print("Error fetching pokemons:", error) }
+        }
+    }
+}
+
+struct PokemonStatView: View {
+    var stat: Stat?
+    
+    var body: some View {
+        let id = "Stat ID: " + String(stat?.id ?? 0)
+        let name = "Stat name: " + String(stat?.name ?? "Unknown")
+        let gameIndex = "Stat game index: " + String(stat?.gameIndex ?? 0)
+        
+        VStack(alignment: .center, spacing: 5) {
+            Text("Pokemon Stat")
+            HStack (alignment:.center, spacing: 5) {
+                VStack(alignment:.leading, spacing: 5) {
+                    Text(id)
+                        .font(.custom("Nunito-Regular", size: 18, relativeTo: .largeTitle))
+                    Text(name)
+                        .font(.custom("Nunito-Regular", size: 16, relativeTo: .subheadline))
+                    Text(gameIndex)
+                        .font(.custom("Nunito-Regular", size: 16, relativeTo: .subheadline))
+                }
+                Spacer()
+                Image(systemName: (stat?.isBattleOnly ?? false) ? "" : "figure.baseball")
+                    .frame(
+                        minWidth: 0,
+                        maxWidth: .infinity,
+                        minHeight: 0,
+                        maxHeight: .infinity,
+                        alignment: .topTrailing
+                    )
+                    .padding()
+                    .font(.system(size: 30))
+                    .foregroundColor(.white)
+            }
+        }
     }
 }
 

@@ -15,6 +15,7 @@ enum CodingKeys: String, CodingKey {
     case baseExperience = "base_experience"
     case images = "sprites"
     case isDefault = "is_default"
+    case stats = "stats"
 }
 
 struct Pokemon: Decodable {
@@ -25,6 +26,7 @@ struct Pokemon: Decodable {
     var baseExperience: Int
     var isDefault: Bool
     var images: PokemonImage?
+    var stats: [PokemonStatInfo]
     
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -35,5 +37,6 @@ struct Pokemon: Decodable {
         isDefault = try container.decode(Bool.self, forKey: .isDefault)
         baseExperience = try container.decode(Int.self, forKey: .baseExperience)
         images = try? container.decode(PokemonImage.self, forKey: .images)
+        stats = try container.decode([PokemonStatInfo].self, forKey: .stats)
     }
 }

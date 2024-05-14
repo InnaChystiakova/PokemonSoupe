@@ -16,14 +16,14 @@ struct PokemonListView: View {
                 ForEach($viewModel.results, id: \.self) { element in
                     ForEach(element.pokemonsInfo, id: \.self) { pokemon in
                         NavigationLink(destination: PokemonDetailsView(pokemon: pokemon.detailsPokemon)){
-                            vCell(pokemon: pokemon)
+                            PokemonCell(pokemon: pokemon)
                         }
                     }
                 }
                 .listRowBackground(Color.clear)
                 .listRowSeparator(.hidden)
                 if (viewModel.isMorePokemonsAvailable) {
-                    BottomView(viewModel: viewModel)
+                    PokemonBottomView(viewModel: viewModel)
                 }
             }
             .overlay {
@@ -45,34 +45,6 @@ struct PokemonListView: View {
             .navigationBarTitleDisplayMode(.automatic)
             .tint(.white)
         }
-    }
-}
-
-struct vCell: View {
-    @Binding var pokemon: PokemonInfo
-    
-    var body: some View {
-        HStack(spacing: 20) {
-            PokemonImageView(imageURL: pokemon.detailsPokemon?.images?.frontDefault ??
-                             pokemon.detailsPokemon?.images?.frontShiny ?? "")
-            .frame(width: 50, height: 50)
-            .clipShape(Circle())
-            
-            Text(pokemon.name.capitalizedFirstLetter)
-                .font(.custom("Zapfino", size: 15))
-        }
-    }
-}
-
-struct BottomView: View {
-    var viewModel: PokemonViewModel
-    
-    var body: some View {
-        ProgressView()
-            .task {
-                do { try await viewModel.loadMorePokemons() }
-                catch { print("Error loading more pokemons:", error) }
-            }
     }
 }
 
