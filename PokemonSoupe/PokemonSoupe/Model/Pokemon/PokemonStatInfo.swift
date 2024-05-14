@@ -24,6 +24,12 @@ struct PokemonStatInfo: Decodable {
         effort = try container.decode(Int.self, forKey: .effort)
         statInfo = try container.decode(StatInfo.self, forKey: .statInfo)
     }
+    
+    init(baseStat: Int, effort: Int, statInfo: StatInfo) {
+        self.baseStat = baseStat
+        self.effort = effort
+        self.statInfo = statInfo
+    }
 }
 
 extension PokemonStatInfo: Equatable {

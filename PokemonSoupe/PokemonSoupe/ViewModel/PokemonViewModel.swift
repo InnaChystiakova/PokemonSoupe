@@ -19,6 +19,9 @@ class PokemonViewModel: ObservableObject {
     var allLodadedPokemons: Int = 0
     
     func fetchPokemons() async throws {
+        DispatchQueue.main.async {
+            self.fetching = true
+        }
         try await downloadPokemons(by: pokemonUrlString) { foundPokemons in
             self.results = foundPokemons
             self.fetching = false

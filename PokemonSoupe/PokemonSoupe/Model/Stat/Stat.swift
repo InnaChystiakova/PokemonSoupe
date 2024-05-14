@@ -27,4 +27,11 @@ struct Stat: Decodable {
         gameIndex = try container.decode(Int.self, forKey: .gameIndex)
         isBattleOnly = try container.decode(Bool.self, forKey: .isBattleOnly)
     }
+    
+    init(id: Int, name: String, gameIndex: Int, isBattleOnly: Bool) {
+            self.id = id
+            self.name = name
+            self.gameIndex = gameIndex
+            self.isBattleOnly = isBattleOnly
+        }
 }

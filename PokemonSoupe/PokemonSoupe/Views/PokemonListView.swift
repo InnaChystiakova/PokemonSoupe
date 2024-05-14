@@ -9,6 +9,8 @@ import SwiftUI
 
 struct PokemonListView: View {
     @StateObject var viewModel = PokemonViewModel()
+    @State private var searchText = ""
+    @State private var isSearchDrawerOpen = false
     
     var body: some View {
         NavigationStack {

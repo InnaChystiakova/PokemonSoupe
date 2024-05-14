@@ -23,6 +23,11 @@ struct StatInfo: Decodable {
         statURL = try container.decode(String.self, forKey: .statURL)
     }
     
+    init(name: String, statURL: String) {
+        self.name = name
+        self.statURL = statURL
+    }
+    
     func loadStatDetails() async throws -> Stat? {
         guard let url = URL(string: statURL) else { return nil }
         do {

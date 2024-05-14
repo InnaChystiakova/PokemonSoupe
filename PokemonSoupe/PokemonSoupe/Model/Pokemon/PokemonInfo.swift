@@ -18,6 +18,12 @@ struct PokemonInfo: Decodable {
         case detailsURL = "url"
     }
     
+    init(name: String, detailsURL: String) {
+        self.name = name
+        self.detailsURL = detailsURL
+        self.detailsPokemon = nil
+    }
+    
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         name = try container.decode(String.self, forKey: .name)

@@ -27,4 +27,11 @@ struct PokemonListInfo: Decodable, Hashable {
         previous = try? container.decode(String.self, forKey: .previous)
         pokemonsInfo = try container.decode([PokemonInfo].self, forKey: .pokemons)
     }
+    
+    init(count: Int, next: String?, previous: String?, pokemonsInfo: [PokemonInfo]) {
+        self.count = count
+        self.next = next
+        self.previous = previous
+        self.pokemonsInfo = pokemonsInfo
+    }
 }

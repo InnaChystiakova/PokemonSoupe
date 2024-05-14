@@ -130,7 +130,7 @@ struct PokemonStatView: View {
                         .font(.custom("Nunito-Regular", size: 16, relativeTo: .subheadline))
                 }
                 Spacer()
-                Image(systemName: (stat?.isBattleOnly ?? false) ? "" : "figure.baseball")
+                Image(systemName: (stat?.isBattleOnly ?? false) ? "figure.baseball" : "")
                     .frame(
                         minWidth: 0,
                         maxWidth: .infinity,
