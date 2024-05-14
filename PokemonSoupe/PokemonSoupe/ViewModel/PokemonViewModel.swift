@@ -16,27 +16,53 @@ class PokemonViewModel: ObservableObject {
     var isMorePokemonsAvailable = true
     var allLodadedPokemons: Int = 0
     
-    func fetchPokemons() async {
-        
-        let foundPokemons = try! await downloadPokemonList(by: apiUrlString)
-        DispatchQueue.main.async {
+    func fetchPokemons() async throws {
+        try await downloadPokemons(by: apiUrlString) { foundPokemons in
             self.results = foundPokemons
             self.fetching = false
-            
-            //load pokemons
         }
     }
     
-    func loadMorePokemons() async {
-        let nextURL = results.last?.next
+    func loadMorePokemons() async throws {
+        let nextURL = results.last?.next ?? ""
         
-        let morePokemons = try! await downloadPokemonList(by: nextURL)
-
-        DispatchQueue.main.async {
+        try await downloadPokemons(by: nextURL) { morePokemons in
             self.results.append(contentsOf: morePokemons)
             if self.allLodadedPokemons == self.results.first?.count {
                 self.isMorePokemonsAvailable = false
             }
+        }
+    }
+    
+    private func downloadPokemons(by url: String, completion: @escaping ([PokemonListInfo]) -> Void) async throws {
+                
+        var pokemonsList = try! await downloadPokemonList(by: url)
+        let group = DispatchGroup()
+
+        ///
+        /// Solution with .flatMap (alternative load of pokemon details). Can be used instead of nested for...in.
+        ///
+        /*for pokemonInfo in morePokemons.flatMap({ $0.pokemons }) {
+            group.enter()
+            let pokemon = try! await pokemonInfo.fetchDetails()
+            let index = morePokemons.firstIndex(where: { $0.pokemons.contains(pokemonInfo) }) ?? 0
+            morePokemons[index].pokemons[morePokemons[index].pokemons.firstIndex(of: pokemonInfo)!].detailsPokemon = pokemon
+
+            group.leave()
+        }*/
+        ///
+        
+        for i in 0..<pokemonsList.count {
+            for j in 0..<pokemonsList[i].pokemonsInfo.count {
+                group.enter()
+                let pokemon = try! await pokemonsList[i].pokemonsInfo[j].loadPokemonDetails()
+                pokemonsList[i].pokemonsInfo[j].detailsPokemon = pokemon
+                group.leave()
+            }
+        }
+        
+        group.notify(queue: .main) {
+            completion(pokemonsList)
         }
     }
     
@@ -50,7 +76,7 @@ class PokemonViewModel: ObservableObject {
             let (data, _)  = try await URLSession.shared.data(from: url)
             let result = try JSONDecoder().decode(PokemonListInfo.self, from: data)
             foundPokemons.append(result)
-            self.allLodadedPokemons += result.pokemons.count
+            self.allLodadedPokemons += result.pokemonsInfo.count
             
         } catch let DecodingError.dataCorrupted(context) {
             print(context)

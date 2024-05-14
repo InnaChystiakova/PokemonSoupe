@@ -11,7 +11,7 @@ struct PokemonListInfo: Decodable, Hashable {
     var count: Int
     var next: String?
     var previous: String?
-    var pokemons: [PokemonInfo]
+    var pokemonsInfo: [PokemonInfo]
     
     enum CodingKeys: String, CodingKey {
         case count = "count"
@@ -25,6 +25,6 @@ struct PokemonListInfo: Decodable, Hashable {
         count = try container.decode(Int.self, forKey: .count)
         next = try? container.decode(String.self, forKey: .next)
         previous = try? container.decode(String.self, forKey: .previous)
-        pokemons = try container.decode([PokemonInfo].self, forKey: .pokemons)
+        pokemonsInfo = try container.decode([PokemonInfo].self, forKey: .pokemons)
     }
 }

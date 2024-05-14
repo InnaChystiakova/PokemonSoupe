@@ -14,7 +14,7 @@ struct PokemonListView: View {
         NavigationView {
             List {
                 ForEach($viewModel.results, id: \.self) { element in
-                    ForEach(element.pokemons, id: \.self) { pokemon in
+                    ForEach(element.pokemonsInfo, id: \.self) { pokemon in
                         NavigationLink(destination: PokemonDetailsView()){
                             vCell(pokemon: pokemon)
                         }
@@ -33,7 +33,8 @@ struct PokemonListView: View {
                 }
             }
             .task {
-                await viewModel.fetchPokemons()
+                do { try await viewModel.fetchPokemons() }
+                catch { print("Error fetching pokemons:", error) }
             }
             .navigationTitle("Pokemons")
         }
@@ -45,8 +46,9 @@ struct vCell: View {
     
     var body: some View {
         HStack {
-            Image(systemName: "photo") // Placeholder image
-                .frame(width: 50, height: 50)
+            PokemonImageView(imageURL: pokemon.detailsPokemon?.images?.frontDefault ??
+                             pokemon.detailsPokemon?.images?.frontShiny ?? "")
+            .frame(width: 50, height: 50)
             Text(pokemon.name)
         }
     }
@@ -58,7 +60,8 @@ struct BottomView: View {
     var body: some View {
         ProgressView()
             .task {
-                await viewModel.loadMorePokemons()
+                do { try await viewModel.loadMorePokemons() }
+                catch { print("Error loading more pokemons:", error) }
             }
     }
 }
