@@ -11,23 +11,23 @@ import XCTest
 @testable import PokemonSoupe
 
 class StatTests: XCTestCase {
-
+    
     func testDecoding() throws {
-        let json = """
-        {
-            "id": 1,
-            "name": "hp",
-            "game_index": 1,
-            "is_battle_only": false
+        let statData = try jsonData(fileName: "StatData")
+        
+        do {
+            let stat = try JSONDecoder().decode(Stat.self, from: statData)
+            XCTAssertEqual(stat.id, 1, "ID should match")
+            XCTAssertEqual(stat.name, "hp", "Name should match")
+            XCTAssertEqual(stat.gameIndex, 1, "Game index should match")
+            XCTAssertFalse(stat.isBattleOnly, "isBattleOnly should be false")
+        } catch {
+            XCTFail("Decoding failed: \(error.localizedDescription)")
         }
-        """
-        let data = json.data(using: .utf8)!
-        
-        let stat = try JSONDecoder().decode(Stat.self, from: data)
-        
-        XCTAssertEqual(stat.id, 1, "ID should match")
-        XCTAssertEqual(stat.name, "hp", "Name should match")
-        XCTAssertEqual(stat.gameIndex, 1, "Game index should match")
-        XCTAssertFalse(stat.isBattleOnly, "isBattleOnly should be false")
+    }
+    
+    func testInitialization() {
+        let testStat = Stat(id: 123, name: "Test Stat", gameIndex: 3, isBattleOnly: true)
+        XCTAssertNotNil(testStat)
     }
 }

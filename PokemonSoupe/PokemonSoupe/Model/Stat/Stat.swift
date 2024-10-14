@@ -13,7 +13,7 @@ struct Stat: Decodable {
     let gameIndex: Int
     let isBattleOnly: Bool
     
-    enum CodingKeys: String, CodingKey {
+    private enum CodingKeys: String, CodingKey {
         case id = "id"
         case name = "name"
         case gameIndex = "game_index"
@@ -29,9 +29,9 @@ struct Stat: Decodable {
     }
     
     init(id: Int, name: String, gameIndex: Int, isBattleOnly: Bool) {
-            self.id = id
-            self.name = name
-            self.gameIndex = gameIndex
-            self.isBattleOnly = isBattleOnly
-        }
+        self.id = id
+        self.name = name
+        self.gameIndex = gameIndex
+        self.isBattleOnly = isBattleOnly
+    }
 }
