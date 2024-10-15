@@ -13,18 +13,15 @@ import XCTest
 class StatInfoTests: XCTestCase {
 
     func testDecoding() throws {
-        // Given
-        let json = """
-        {
-            "name": "hp",
-            "url": "https://pokeapi.co/api/v2/stat/1/"
+        let data = try jsonData(fileName: "StatInfo")
+        do {
+            let statInfo = try JSONDecoder().decode(StatInfo.self, from: data)
+            
+            XCTAssertEqual(statInfo.name, "hp", "Name should match")
+            XCTAssertEqual(statInfo.statURL, "https://pokeapi.co/api/v2/stat/1/", "Stat URL should match")
+        } catch {
+            XCTFail("Decoding failed: \(error.localizedDescription)")
         }
-        """
-        let data = json.data(using: .utf8)!
-        let statInfo = try JSONDecoder().decode(StatInfo.self, from: data)
-        
-        XCTAssertEqual(statInfo.name, "hp", "Name should match")
-        XCTAssertEqual(statInfo.statURL, "https://pokeapi.co/api/v2/stat/1/", "Stat URL should match")
     }
     
     func testLoadStatDetails() {

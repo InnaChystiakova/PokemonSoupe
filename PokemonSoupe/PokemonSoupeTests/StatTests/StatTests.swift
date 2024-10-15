@@ -13,7 +13,7 @@ import XCTest
 class StatTests: XCTestCase {
     
     func testDecoding() throws {
-        let statData = try jsonData(fileName: "StatData")
+        let statData = try jsonData(fileName: "Stat")
         
         do {
             let stat = try JSONDecoder().decode(Stat.self, from: statData)
