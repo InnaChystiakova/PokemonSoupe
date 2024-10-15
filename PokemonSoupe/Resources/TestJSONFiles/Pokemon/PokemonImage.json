@@ -1,0 +1,10 @@
+{
+    "back_default": "back_default_image_url",
+    "back_female": "back_female_image_url",
+    "back_shiny": "back_shiny_image_url",
+    "back_shiny_female": "back_shiny_female_image_url",
+    "front_default": "front_default_image_url",
+    "front_female": "front_female_image_url",
+    "front_shiny": "front_shiny_image_url",
+    "front_shiny_female": "front_shiny_female_image_url"
+}

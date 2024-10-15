@@ -13,9 +13,8 @@ import XCTest
 class StatTests: XCTestCase {
     
     func testDecoding() throws {
-        let statData = try jsonData(fileName: "Stat")
-        
         do {
+            let statData = try jsonData(fileName: "Stat")
             let stat = try JSONDecoder().decode(Stat.self, from: statData)
             XCTAssertEqual(stat.id, 1, "ID should match")
             XCTAssertEqual(stat.name, "hp", "Name should match")
