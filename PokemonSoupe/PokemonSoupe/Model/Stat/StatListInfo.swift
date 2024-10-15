@@ -8,17 +8,17 @@
 import Foundation
 
 struct  StatListInfo: Decodable {
-    let count: Int
-    let next: Int?
-    let previous: Int?
-    var stats: [StatInfo]
-    
-    enum CodingKeys: String, CodingKey {
+    private enum CodingKeys: String, CodingKey {
         case count = "count"
         case next = "next"
         case previous = "previous"
         case stats = "results"
     }
+    
+    let count: Int
+    let next: Int?
+    let previous: Int?
+    var stats: [StatInfo]
     
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)

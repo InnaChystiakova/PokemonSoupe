@@ -8,14 +8,14 @@
 import Foundation
 
 struct StatInfo: Decodable {
-    let name: String
-    let statURL: String
-    var stat: Stat?
-    
-    enum CodingKeys: String, CodingKey {
+    private enum CodingKeys: String, CodingKey {
         case name = "name"
         case statURL = "url"
     }
+    
+    let name: String
+    let statURL: String
+    var stat: Stat?
     
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)

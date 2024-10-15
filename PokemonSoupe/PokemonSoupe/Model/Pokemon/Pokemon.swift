@@ -7,18 +7,18 @@
 
 import Foundation
 
-enum CodingKeys: String, CodingKey {
-    case id = "id"
-    case name = "name"
-    case weight = "weight"
-    case height = "height"
-    case baseExperience = "base_experience"
-    case images = "sprites"
-    case isDefault = "is_default"
-    case stats = "stats"
-}
-
 struct Pokemon: Decodable {
+    private enum CodingKeys: String, CodingKey {
+        case id = "id"
+        case name = "name"
+        case weight = "weight"
+        case height = "height"
+        case baseExperience = "base_experience"
+        case images = "sprites"
+        case isDefault = "is_default"
+        case stats = "stats"
+    }
+    
     let id: Int
     let name: String
     var weight: Int

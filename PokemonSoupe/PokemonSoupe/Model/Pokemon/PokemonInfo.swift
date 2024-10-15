@@ -8,26 +8,25 @@
 import Foundation
 
 struct PokemonInfo: Decodable {
+    private enum CodingKeys: String, CodingKey {
+        case name = "name"
+        case detailsURL = "url"
+    }
     
     var name: String
     var detailsURL: String
     var detailsPokemon: Pokemon?
     
-    enum CodingKeys: String, CodingKey {
-        case name = "name"
-        case detailsURL = "url"
+    init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        name = try container.decode(String.self, forKey: .name)
+        detailsURL = try container.decode(String.self, forKey: .detailsURL)
     }
     
     init(name: String, detailsURL: String) {
         self.name = name
         self.detailsURL = detailsURL
         self.detailsPokemon = nil
-    }
-    
-    init(from decoder: any Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.decode(String.self, forKey: .name)
-        detailsURL = try container.decode(String.self, forKey: .detailsURL)
     }
     
     func loadPokemonDetails() async throws -> Pokemon? {

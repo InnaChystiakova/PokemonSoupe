@@ -8,17 +8,17 @@
 import Foundation
 
 struct PokemonListInfo: Decodable, Hashable {
-    var count: Int
-    var next: String?
-    var previous: String?
-    var pokemonsInfo: [PokemonInfo]
-    
-    enum CodingKeys: String, CodingKey {
+    private enum CodingKeys: String, CodingKey {
         case count = "count"
         case next = "next"
         case previous = "previous"
         case pokemons = "results"
     }
+    
+    var count: Int
+    var next: String?
+    var previous: String?
+    var pokemonsInfo: [PokemonInfo]
     
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)

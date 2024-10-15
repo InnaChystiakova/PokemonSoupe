@@ -8,17 +8,17 @@
 import Foundation
 
 struct Stat: Decodable {
-    let id: Int
-    let name: String
-    let gameIndex: Int
-    let isBattleOnly: Bool
-    
     private enum CodingKeys: String, CodingKey {
         case id = "id"
         case name = "name"
         case gameIndex = "game_index"
         case isBattleOnly = "is_battle_only"
     }
+    
+    let id: Int
+    let name: String
+    let gameIndex: Int
+    let isBattleOnly: Bool
     
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)

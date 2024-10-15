@@ -8,17 +8,7 @@
 import Foundation
 
 struct PokemonImage: Decodable {
-    
-    let backDefault: String?
-    let backFemale: String?
-    var backShiny: String?
-    var backShinyFemale: String?
-    var frontDefault: String?
-    var frontFemale: String?
-    var frontShiny: String?
-    var frontShinyFemale: String?
-    
-    enum CodingKeys: String, CodingKey {
+    private enum CodingKeys: String, CodingKey {
         case backDefault = "back_default"
         case backFemale = "back_female"
         case backShiny = "back_shiny"
@@ -28,6 +18,15 @@ struct PokemonImage: Decodable {
         case frontShiny = "front_shiny"
         case frontShinyFemale = "front_shiny_female"
     }
+    
+    let backDefault: String?
+    let backFemale: String?
+    var backShiny: String?
+    var backShinyFemale: String?
+    var frontDefault: String?
+    var frontFemale: String?
+    var frontShiny: String?
+    var frontShinyFemale: String?
     
     init(from decoder: any Decoder) throws {
         let container = try? decoder.container(keyedBy: CodingKeys.self)
@@ -40,5 +39,4 @@ struct PokemonImage: Decodable {
         frontShiny = try? container?.decode(String.self, forKey: .frontShiny)
         frontShinyFemale = try? container?.decode(String.self, forKey: .frontShinyFemale)
     }
-    
 }
