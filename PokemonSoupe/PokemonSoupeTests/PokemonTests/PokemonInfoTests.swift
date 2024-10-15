@@ -13,17 +13,15 @@ import XCTest
 class PokemonInfoTests: XCTestCase {
 
     func testDecoding() throws {
-        let json = """
-        {
-            "name": "pikachu",
-            "url": "https://pokeapi.co/api/v2/pokemon/25/"
+        do {
+            let data = try jsonData(fileName: "PokemonInfo")
+            let pokemonInfo = try JSONDecoder().decode(PokemonInfo.self, from: data)
+            
+            XCTAssertEqual(pokemonInfo.name, "pikachu", "Name should be 'pikachu'")
+            XCTAssertEqual(pokemonInfo.detailsURL, "https://pokeapi.co/api/v2/pokemon/25/", "Details URL should be 'https://pokeapi.co/api/v2/pokemon/25/'")
+        } catch {
+            XCTFail("Decoding failed: \(error.localizedDescription)")
         }
-        """
-        let data = json.data(using: .utf8)!
-        let pokemonInfo = try JSONDecoder().decode(PokemonInfo.self, from: data)
-        
-        XCTAssertEqual(pokemonInfo.name, "pikachu", "Name should be 'pikachu'")
-        XCTAssertEqual(pokemonInfo.detailsURL, "https://pokeapi.co/api/v2/pokemon/25/", "Details URL should be 'https://pokeapi.co/api/v2/pokemon/25/'")
     }
     
     func testEquatable() {
@@ -31,6 +29,18 @@ class PokemonInfoTests: XCTestCase {
         let pokemonInfo2 = PokemonInfo(name: "pikachu", detailsURL: "https://pokeapi.co/api/v2/pokemon/25/")
         
         XCTAssertEqual(pokemonInfo1, pokemonInfo2, "Instances should be equal")
+    }
+    
+    func testHashable() {
+        let pokemonInfo1 = PokemonInfo(name: "pikachu", detailsURL: "https://pokeapi.co/api/v2/pokemon/25/")
+        let pokemonInfo2 = PokemonInfo(name: "pikachu", detailsURL: "https://pokeapi.co/api/v2/pokemon/25/")
+        
+        XCTAssertEqual(pokemonInfo1.hashValue, pokemonInfo2.hashValue, "Hash values should be equal")
+    }
+    
+    func testInitialization() {
+        let pokemonInfo = PokemonInfo(name: "pikachu", detailsURL: "https://pokeapi.co/api/v2/pokemon/25/")
+        XCTAssertNotNil(pokemonInfo)
     }
     
     func testLoadPokemonDetails() async {
@@ -47,10 +57,4 @@ class PokemonInfoTests: XCTestCase {
         }
     }
     
-    func testHashable() {
-        let pokemonInfo1 = PokemonInfo(name: "pikachu", detailsURL: "https://pokeapi.co/api/v2/pokemon/25/")
-        let pokemonInfo2 = PokemonInfo(name: "pikachu", detailsURL: "https://pokeapi.co/api/v2/pokemon/25/")
-        
-        XCTAssertEqual(pokemonInfo1.hashValue, pokemonInfo2.hashValue, "Hash values should be equal")
-    }
 }

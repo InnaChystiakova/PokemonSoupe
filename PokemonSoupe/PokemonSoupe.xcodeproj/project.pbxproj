@@ -16,6 +16,7 @@
 		B320A9D72CBEA203006874F1 /* PokemonStatInfo.json in Resources */ = {isa = PBXBuildFile; fileRef = B320A9D62CBEA1F9006874F1 /* PokemonStatInfo.json */; };
 		B320A9DA2CBEA53D006874F1 /* PokemonListInfo.json in Resources */ = {isa = PBXBuildFile; fileRef = B320A9D92CBEA534006874F1 /* PokemonListInfo.json */; };
 		B320A9DC2CBEA612006874F1 /* PokemonImage.json in Resources */ = {isa = PBXBuildFile; fileRef = B320A9DB2CBEA60D006874F1 /* PokemonImage.json */; };
+		B320A9DE2CBEA959006874F1 /* PokemonInfo.json in Resources */ = {isa = PBXBuildFile; fileRef = B320A9DD2CBEA954006874F1 /* PokemonInfo.json */; };
 		B3E73A832BEBF40B0037DDEE /* PokemonSoupeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E73A822BEBF40B0037DDEE /* PokemonSoupeApp.swift */; };
 		B3E73A872BEBF40C0037DDEE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3E73A862BEBF40C0037DDEE /* Assets.xcassets */; };
 		B3E73A8A2BEBF40C0037DDEE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3E73A892BEBF40C0037DDEE /* Preview Assets.xcassets */; };
@@ -74,6 +75,7 @@
 		B320A9D62CBEA1F9006874F1 /* PokemonStatInfo.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = PokemonStatInfo.json; sourceTree = "<group>"; };
 		B320A9D92CBEA534006874F1 /* PokemonListInfo.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = PokemonListInfo.json; sourceTree = "<group>"; };
 		B320A9DB2CBEA60D006874F1 /* PokemonImage.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = PokemonImage.json; sourceTree = "<group>"; };
+		B320A9DD2CBEA954006874F1 /* PokemonInfo.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = PokemonInfo.json; sourceTree = "<group>"; };
 		B3E73A7F2BEBF40B0037DDEE /* PokemonSoupe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PokemonSoupe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3E73A822BEBF40B0037DDEE /* PokemonSoupeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonSoupeApp.swift; sourceTree = "<group>"; };
 		B3E73A862BEBF40C0037DDEE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -191,6 +193,7 @@
 				B320A9D62CBEA1F9006874F1 /* PokemonStatInfo.json */,
 				B320A9D92CBEA534006874F1 /* PokemonListInfo.json */,
 				B320A9DB2CBEA60D006874F1 /* PokemonImage.json */,
+				B320A9DD2CBEA954006874F1 /* PokemonInfo.json */,
 			);
 			path = Pokemon;
 			sourceTree = "<group>";
@@ -202,6 +205,7 @@
 				B3E73B5B2BF403BE0037DDEE /* PokemonStatInfoTests.swift */,
 				B3E73B572BF400810037DDEE /* PokemonListInfoTests.swift */,
 				B3E73B592BF4035B0037DDEE /* PokemonImageTests.swift */,
+				B3E73B552BF3FD540037DDEE /* PokemonInfoTests.swift */,
 			);
 			path = PokemonTests;
 			sourceTree = "<group>";
@@ -256,7 +260,6 @@
 				B320A9C12CBDA6F8006874F1 /* Helpers */,
 				B3E73B612BF40AAD0037DDEE /* PokemonViewModelTest.swift */,
 				B3E73A932BEBF40C0037DDEE /* PokemonSoupeTests.swift */,
-				B3E73B552BF3FD540037DDEE /* PokemonInfoTests.swift */,
 				B320A9D82CBEA494006874F1 /* PokemonTests */,
 				B320A9D12CBE8A7F006874F1 /* StatTests */,
 			);
@@ -324,8 +327,8 @@
 				B3E73ABC2BED244C0037DDEE /* Pokemon.swift */,
 				B3E73B432BF3B31D0037DDEE /* PokemonStatInfo.swift */,
 				B3E73B332BF265A90037DDEE /* PokemonListInfo.swift */,
-				B3E73AC52BED416A0037DDEE /* PokemonInfo.swift */,
 				B3E73B412BF3B1B60037DDEE /* PokemonImage.swift */,
+				B3E73AC52BED416A0037DDEE /* PokemonInfo.swift */,
 			);
 			path = Pokemon;
 			sourceTree = "<group>";
@@ -333,9 +336,9 @@
 		B3E73B4E2BF3DAAE0037DDEE /* Stat */ = {
 			isa = PBXGroup;
 			children = (
-				B3E73B472BF3BBC70037DDEE /* StatListInfo.swift */,
-				B3E73B452BF3BB8F0037DDEE /* StatInfo.swift */,
 				B3E73B492BF3BC2F0037DDEE /* Stat.swift */,
+				B3E73B452BF3BB8F0037DDEE /* StatInfo.swift */,
+				B3E73B472BF3BBC70037DDEE /* StatListInfo.swift */,
 			);
 			path = Stat;
 			sourceTree = "<group>";
@@ -458,6 +461,7 @@
 				B320A9DA2CBEA53D006874F1 /* PokemonListInfo.json in Resources */,
 				B320A9D72CBEA203006874F1 /* PokemonStatInfo.json in Resources */,
 				B320A9D52CBEA08C006874F1 /* Pokemon.json in Resources */,
+				B320A9DE2CBEA959006874F1 /* PokemonInfo.json in Resources */,
 				B320A9CC2CBE8853006874F1 /* StatInfo.json in Resources */,
 				B320A9D02CBE8996006874F1 /* StatListInfo.json in Resources */,
 			);
