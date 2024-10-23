@@ -27,7 +27,7 @@ struct StatListInfoItem: Decodable {
     let previous: Int?
     var results: [StatInfo]
     
-    var statListInfoItem: StatListInfo {
+    var statListInfo: StatListInfo {
         return StatListInfo(count: count, next: next, previous: previous, stats: results)
     }
 }
@@ -39,6 +39,6 @@ class StatListInfoMapper {
         guard response.statusCode == 200, let statListInfoData = try? JSONDecoder().decode(StatListInfoItem.self, from: data) else {
             throw GeneralError.invalidData
         }
-        return statListInfoData.statListInfoItem
+        return statListInfoData.statListInfo
     }
 }

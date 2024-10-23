@@ -113,9 +113,9 @@ class PokemonViewModel: ObservableObject {
         }
         let result = try await downloadData(from: url, decodingType: StatListInfoItem.self)
         DispatchQueue.main.async {
-            self.statsList.append(result.statListInfoItem)
+            self.statsList.append(result.statListInfo)
         }
-        return [result.statListInfoItem]
+        return [result.statListInfo]
     }
     
     private func downloadData<T: Decodable>(from url: URL, decodingType: T.Type) async throws -> T {

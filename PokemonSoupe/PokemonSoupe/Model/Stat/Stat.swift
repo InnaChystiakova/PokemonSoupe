@@ -27,7 +27,7 @@ struct StatItem: Decodable {
     let game_index: Int
     let is_battle_only: Bool
     
-    var statItem: Stat {
+    var stat: Stat {
         return Stat(id: id, name: name, gameIndex: game_index, isBattleOnly: is_battle_only)
     }
 }
@@ -39,6 +39,6 @@ class StatMapper {
         guard response.statusCode == 200, let statData = try? JSONDecoder().decode(StatItem.self, from: data) else {
             throw GeneralError.invalidData
         }
-        return statData.statItem
+        return statData.stat
     }
 }
