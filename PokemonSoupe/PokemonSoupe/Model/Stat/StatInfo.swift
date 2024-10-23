@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct StatInfo: Decodable {
+struct StatInfo: Decodable, Hashable, Equatable {
     private enum CodingKeys: String, CodingKey {
         case name = "name"
         case statURL = "url"
@@ -31,12 +31,25 @@ struct StatInfo: Decodable {
     func loadStatDetails() async throws -> Stat? {
         guard let url = URL(string: statURL) else { return nil }
         do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            let statData = try? JSONDecoder().decode(Stat.self, from: data)
-            return statData ?? nil
+            let (data, response) = try await URLSession.shared.data(from: url)
+            guard let stat = try? StatMapper.map(data: data, response: response as! HTTPURLResponse) else {
+                return nil
+            }
+            return stat
         } catch {
             print("Error fetching stats for \(name):", error)
             return nil
         }
+        
+//        guard let url = URL(string: statURL) else {
+//            throw GeneralError.invalidURL
+//        }
+//        
+//        guard let (data, response) = try? await URLSession.shared.data(from: url) else {
+//            throw GeneralError.connectivity
+//        }
+//        
+//        let stat = try StatMapper.map(data: data, response: response as! HTTPURLResponse)
+//        return stat
     }
 }

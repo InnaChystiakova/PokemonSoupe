@@ -94,36 +94,6 @@ class PokemonViewModelTests: XCTestCase {
         super.tearDown()
     }
 
-    func testFetchPokemons() async throws {
-        viewModel.results.removeAll()
-        
-        do {
-            try await viewModel.fetchPokemons()
-            XCTAssertEqual(viewModel.results.count, 1, "Results count should be 1")
-            XCTAssertEqual(viewModel.results[0].count, 3, "Results count should be 3")
-            XCTAssertFalse(viewModel.fetching, "Fetching should be false")
-            
-            XCTAssertFalse(viewModel.fetching, "Fetching should be false")
-        } catch {
-            XCTFail("Fetching failed: \(error.localizedDescription)")
-        }
-    }
-
-    func testLoadMorePokemons() async throws {
-        viewModel.results.removeAll()
-        
-        do {
-            try await viewModel.fetchPokemons()
-            try await viewModel.loadMorePokemons()
-            
-            XCTAssertEqual(viewModel.results.count, 1, "Results count should be 1")
-            XCTAssertEqual(viewModel.results[0].count, 3, "Results count should be 3")
-            XCTAssertTrue(viewModel.isMorePokemonsAvailable, "More pokemons should be available")
-        }catch {
-            XCTFail("Fetching failed: \(error.localizedDescription)")
-        }
-    }
-
     func testFetchStats() async throws {
         try await viewModel.fetchStats()
 

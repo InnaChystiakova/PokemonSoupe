@@ -7,31 +7,38 @@
 
 import Foundation
 
-struct Stat: Decodable {
-    private enum CodingKeys: String, CodingKey {
-        case id = "id"
-        case name = "name"
-        case gameIndex = "game_index"
-        case isBattleOnly = "is_battle_only"
-    }
-    
+struct Stat: Hashable, Equatable {
     let id: Int
     let name: String
     let gameIndex: Int
     let isBattleOnly: Bool
-    
-    init(from decoder: any Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.decode(Int.self, forKey: .id)
-        name = try container.decode(String.self, forKey: .name)
-        gameIndex = try container.decode(Int.self, forKey: .gameIndex)
-        isBattleOnly = try container.decode(Bool.self, forKey: .isBattleOnly)
-    }
     
     init(id: Int, name: String, gameIndex: Int, isBattleOnly: Bool) {
         self.id = id
         self.name = name
         self.gameIndex = gameIndex
         self.isBattleOnly = isBattleOnly
+    }
+}
+
+struct StatItem: Decodable {
+    let id: Int
+    let name: String
+    let game_index: Int
+    let is_battle_only: Bool
+    
+    var statItem: Stat {
+        return Stat(id: id, name: name, gameIndex: game_index, isBattleOnly: is_battle_only)
+    }
+}
+
+class StatMapper {
+    private init() {}
+    
+    static func map(data: Data, response: HTTPURLResponse) throws -> Stat {
+        guard response.statusCode == 200, let statData = try? JSONDecoder().decode(StatItem.self, from: data) else {
+            throw GeneralError.invalidData
+        }
+        return statData.statItem
     }
 }

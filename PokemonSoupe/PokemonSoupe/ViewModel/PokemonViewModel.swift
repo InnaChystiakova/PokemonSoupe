@@ -42,8 +42,6 @@ class PokemonViewModel: ObservableObject {
     func fetchStats() async throws {
         try await downloadStats(by: statUrlString) { foundStats in
             self.statsList = foundStats
-            
-            
         }
     }
     
@@ -82,6 +80,12 @@ class PokemonViewModel: ObservableObject {
             for j in 0..<statList[i].stats.count {
                 group.enter()
                 let stat = try! await statList[i].stats[j].loadStatDetails()
+                /*
+                 guard let stat = try? await statList[i].stats[j].loadStatDetails() else {
+                     group.leave()
+                     throw GeneralError.invalidData
+                 }
+                 */
                 statList[i].stats[j].stat = stat
                 group.leave()
             }
@@ -107,11 +111,11 @@ class PokemonViewModel: ObservableObject {
         guard let url = URL(string: url ?? "") else {
             return []
         }
-        let result: StatListInfo = try await downloadData(from: url, decodingType: StatListInfo.self)
+        let result = try await downloadData(from: url, decodingType: StatListInfoItem.self)
         DispatchQueue.main.async {
-            self.statsList.append(result)
+            self.statsList.append(result.statListInfoItem)
         }
-        return [result]
+        return [result.statListInfoItem]
     }
     
     private func downloadData<T: Decodable>(from url: URL, decodingType: T.Type) async throws -> T {

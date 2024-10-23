@@ -16,12 +16,12 @@ class StatListInfoTests: XCTestCase {
         let statListInfo = try jsonData(fileName: "StatListInfo")
         
         do {
-            let listInfo = try JSONDecoder().decode(StatListInfo.self, from: statListInfo)
+            let listInfo = try JSONDecoder().decode(StatListInfoItem.self, from: statListInfo)
             XCTAssertEqual(listInfo.count, 8, "Count should match")
             XCTAssertEqual(listInfo.next, 4, "Next list count should match")
             XCTAssertEqual(listInfo.previous, 3, "Previous list info should match")
-            XCTAssertNotNil(listInfo.stats)
-            XCTAssertEqual(listInfo.stats.count, 8, "Count of stats should match")
+            XCTAssertNotNil(listInfo.results)
+            XCTAssertEqual(listInfo.results.count, 8, "Count of stats should match")
         } catch {
             XCTFail("Decoding failed: \(error.localizedDescription)")
         }
